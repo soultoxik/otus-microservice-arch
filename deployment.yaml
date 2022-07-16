@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soultoxik
+  namespace: otus
+  labels:
+    app: soultoxik
+spec:
+  selector:
+    matchLabels:
+      app: soultoxik
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: soultoxik
+    spec:
+      containers:
+      - name: soultoxik
+        image: soultoxik/otus:v3
+        env:
+        - name: SLT_PORT
+          value: "3117"
+        - name: SLT_ALIVE_ERROR_RATE
+          value: "0.1"
+        - name: SLT_READY_ERROR_RATE
+          value: "0.1"
+        
+
+        imagePullPolicy: IfNotPresent
+
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3117
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3117
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3117
+          initialDelaySeconds: 5
+          periodSeconds: 10

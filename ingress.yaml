@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: soultoxik
+  namespace: otus
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  labels:
+    name: soultoxik
+
+spec:
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: soultoxik
+            port: 
+              number: 7337
