@@ -10,4 +10,7 @@ controller:
       https: 443
 
   service:
-    type: NodePort
+    type: LoadBalancer
+    externalIPs:
+      - 192.168.49.2
+    externalTrafficPolicy: Local

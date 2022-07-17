@@ -21,13 +21,27 @@ spec:
         app: soultoxik
     spec:
       containers:
+      - name: echo
+        image: soultoxik/otus-echo:v2
+        env:
+        - name: SLT_STUDENTS_PORT
+          value: "3118"
+        imagePullPolicy: IfNotPresent
+
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 3118
+
       - name: soultoxik
-        image: soultoxik/otus:v3
+        image: soultoxik/otus:v5
         env:
         - name: SLT_PORT
           value: "3117"
         - name: SLT_ALIVE_ERROR_RATE
-          value: "0.1"
+          value: "0.0"
         - name: SLT_READY_ERROR_RATE
           value: "0.1"
         
@@ -46,9 +60,13 @@ spec:
             port: 3117
           initialDelaySeconds: 5
           periodSeconds: 10
+          failureThreshold: 1
+
         livenessProbe:
           httpGet:
             path: /health
             port: 3117
           initialDelaySeconds: 5
           periodSeconds: 10
+          failureThreshold: 1
+

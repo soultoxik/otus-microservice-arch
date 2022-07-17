@@ -7,6 +7,41 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
   labels:
     name: soultoxik
+spec:
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service: 
+            name: echo
+            port: 
+              number: 7338    
+  - host: arch.homework
+    http:
+      paths:
+      - pathType: Prefix
+        path: /(health|ready)
+        backend:
+          service:
+            name: soultoxik
+            port: 
+              number: 7337
+  
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rewrite
+  namespace: otus
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: http://arch.homework/$2
+  labels:
+    name: soultoxik
 
 spec:
   rules:
@@ -14,9 +49,10 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: "/"
+        path: /otusapp(/|$)(.*)
         backend:
-          service:
-            name: soultoxik
+          service: 
+            name: echo
             port: 
-              number: 7337
+              number: 7338
+          
