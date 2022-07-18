@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: otus
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,8 +55,8 @@ spec:
 
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "64Mi"
+            cpu: "50m"
         ports:
         - containerPort: 3117
         readinessProbe:

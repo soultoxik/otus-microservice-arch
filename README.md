@@ -23,14 +23,14 @@ maybe one of: 200, 500
 
 ```
 ### rewriting
-`curl -I -k http://arch.homework/otusapp/ms` 
+`curl -I -k http://arch.homework/otusapp/soultoxik/ready` 
 should be:
 ```
 HTTP/1.1 302 Moved Temporarily
 Content-Type: text/html
 Content-Length: 138
 Connection: keep-alive
-Location: http://arch.homework/rer
+Location: http://arch.homework/ready
 ```
 
 ### echo
